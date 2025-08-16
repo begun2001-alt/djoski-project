@@ -1,0 +1,115 @@
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Какая ты сегодня Даша?</title>
+    <link rel="stylesheet" href="/vendor/style.css">
+  </head>
+  <body>
+    <div class="bg-emoji">
+      <div class="bg-emoji__item">🎉</div>
+      <div class="bg-emoji__item">🔥</div>
+      <div class="bg-emoji__item">🤡</div>
+      <div class="bg-emoji__item">🤣</div>
+      <div class="bg-emoji__item">💥</div>
+      <div class="bg-emoji__item">🎂</div>
+    </div>
+
+    <main class="container">
+      <header class="hero">
+        <h1>Какая ты сегодня <span class="gradient">Даша</span>?</h1>
+        <p class="subtitle">Жми на дату — фото и подпись выбираются случайно и закрепляются за этим днём 🎁</p>
+      </header>
+
+      <section class="calendar-card">
+        <div class="calendar-header">
+          <div id="monthLabel"></div>
+        </div>
+        <div id="calendar" class="calendar-grid"></div>
+      </section>
+
+      <section id="adminSection" class="card hidden">
+        <div class="card-header">
+          <h2>Админ-панель</h2>
+          <button id="closeAdmin" class="btn btn-secondary small">Закрыть</button>
+        </div>
+
+        <div id="pinBlock" class="card inner">
+          <h3>Доступ</h3>
+          <p class="muted" id="pinHint">Создайте PIN для входа в редактирование.</p>
+          <div class="form" id="createPinForm">
+            <label>Новый PIN (4–12 символов)</label>
+            <input type="password" id="newPin" minlength="4" maxlength="32" placeholder="Например: 2607" />
+            <button class="btn" id="savePinBtn">Сохранить PIN</button>
+          </div>
+
+          <div class="form hidden" id="loginForm">
+            <label>PIN</label>
+            <input type="password" id="pinInput" placeholder="Введите PIN">
+            <button class="btn" id="loginBtn">Войти</button>
+            <div class="muted" id="loginStatus"></div>
+          </div>
+        </div>
+
+        <div id="manageBlock" class="hidden">
+          <section class="card inner">
+            <h3>Загрузка фото</h3>
+            <form id="uploadForm" class="form">
+              <label>Фотографии (можно несколько)</label>
+              <input type="file" id="fileInput" accept="image/*" multiple />
+              <label>Подпись к выбранным файлам (необязательно, можно менять потом)</label>
+              <input type="text" id="captionInput" maxlength="200" placeholder="Например: «Даша — королева праздника»" />
+              <button class="btn" type="submit">Загрузить</button>
+              <div class="muted" id="uploadStatus"></div>
+            </form>
+          </section>
+
+          <section class="card inner">
+            <div class="card-header">
+              <h3>Все фото</h3>
+              <button class="btn btn-secondary small" id="refreshList">Обновить</button>
+            </div>
+            <div id="photosList" class="photos-grid"></div>
+          </section>
+
+          <section class="card inner warn">
+            <h3>Сброс назначений</h3>
+            <p class="muted">Назначения фиксируют «дата → фото». Очистка позволяет перетасовать заново.</p>
+            <div class="actions">
+              <button class="btn btn-danger" id="clearMonth">Сбросить текущий месяц</button>
+              <button class="btn btn-danger outline" id="clearAll">Сбросить всё</button>
+            </div>
+          </section>
+
+          <section class="card inner">
+            <h3>Резервная копия</h3>
+            <div class="actions">
+              <button class="btn" id="exportBackup">Скачать бэкап (JSON)</button>
+              <label class="btn btn-secondary">
+                Импортировать бэкап
+                <input id="importBackup" type="file" accept="application/json" class="hidden-input">
+              </label>
+            </div>
+            <p class="muted">Бэкап включает фотографии (внутри файла), подписи и назначения. Можно переносить на другой компьютер.</p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <button id="adminFab" class="admin-fab" title="Редактировать">⚙️</button>
+
+    <div id="photoModal" class="modal hidden">
+      <div class="modal-content">
+        <button class="modal-close" id="closeModal">✖</button>
+        <div class="modal-photo-wrap">
+          <img id="modalPhoto" alt="Фото дня" />
+        </div>
+        <div id="modalCaption" class="caption"></div>
+        <div id="confetti" class="confetti"></div>
+      </div>
+    </div>
+
+    <!-- подключаем как обычный скрипт, без импортов Vite -->
+    <script src="/vendor/app.js" defer is:inline></script>
+  </body>
+</html>
